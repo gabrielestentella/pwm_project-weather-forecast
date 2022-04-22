@@ -1,0 +1,62 @@
+.navbar {
+	background-color: #e1e5f2;
+}
+
+.caritem1 {
+	height: 600px;
+	background-image: url("img_carousel/milano.jpeg");
+	background-size: cover;
+}
+
+.caritem2 {
+	height: 600px;
+	background-image: url("img_carousel/londra.jpeg");
+	background-size: cover;
+}
+
+.caritem3 {
+	height: 600px;
+	background-image: url("img_carousel/parigi.jpeg");
+	background-size: cover;
+}
+
+.overlay {
+	height: 100%;
+	width: 100%;
+	background-color: rgba(225, 229, 242, 0.4);
+}
+
+.city {
+	position: relative;
+  	top: 50%;
+  	left: 50%;
+  	transform: translate(-50%, -50%);
+  	text-align: center;
+  	font-size: 40px;
+}
+
+.card > img {
+	height: 150px;
+}
+
+.col-sm-auto {
+	margin: 0 auto;
+	padding: 5%;
+}
+
+.centering {
+  	text-align: center;
+}
+
+.featurette > .col-md-5 {
+	text-align: center;
+	font-size: 150px;
+}
+
+body {
+	background-color: #e1e5f2;
+}
+
+.card-text {
+	font-size: 22px;
+}
