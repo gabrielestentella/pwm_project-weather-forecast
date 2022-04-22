@@ -4,19 +4,19 @@
 
 .caritem1 {
 	height: 600px;
-	background-image: url("img_carousel/milano.jpeg");
+	background-image: url("../img_carousel/milano.jpeg");
 	background-size: cover;
 }
 
 .caritem2 {
 	height: 600px;
-	background-image: url("img_carousel/londra.jpeg");
+	background-image: url("../img_carousel/londra.jpeg");
 	background-size: cover;
 }
 
 .caritem3 {
 	height: 600px;
-	background-image: url("img_carousel/parigi.jpeg");
+	background-image: url("../img_carousel/parigi.jpeg");
 	background-size: cover;
 }
 
