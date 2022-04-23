@@ -10,7 +10,6 @@ main {
 main > form {
 	margin-top: 15%;
 }
-.fott {
-	position: relative;
-	margin-top: 100vh;
+h1 {
+	text-align: center;
 }

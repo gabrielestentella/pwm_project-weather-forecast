@@ -16,7 +16,7 @@
 	<header>
   	  	<nav class="navbar navbar-expand-md navbar-light fixed-top">
   	    <div class="container-fluid">
-  	      <a class="navbar-brand" href="../home.html">Meteo</a>
+  	      <a class="navbar-brand" href="home.html">Meteo</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
@@ -53,25 +53,30 @@
   	  </nav>
   	</header>
     <main>
-      <h4>
-        Cerchiamo di migliorare il nostro servizio ogni giorno, grazie ai feedback dei nostri utenti aggiungiamo nuove funzionalità e ottimizziamo il sito per rendere l'esperienza d'uso sempre migliore.
-      </h4>
-      <form>
-        <div class="mb-3">
-        <label for="exampleFormControlInput1" class="form-label">Email</label>
-        <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+      <div class="container">
+          <h4>
+          Cerchiamo di migliorare il nostro servizio ogni giorno, grazie ai feedback dei nostri utenti aggiungiamo nuove funzionalità e ottimizziamo il sito per rendere l'esperienza d'uso sempre migliore.
+          </h4>
+        <form>
+          <div class="mb-3">
+            <label for="exampleFormControlInput1" class="form-label">Email</label>
+            <input type="email" class="form-control" id="exampleFormControlInput1" placeholder="name@example.com">
+          </div>
+          <div class="mb-3">
+            <label for="exampleFormControlTextarea1" class="form-label">Comunicaci eventuali bug o nuove feature che vorresti vedere implementate, oltre a nuove località meteo che ti piacerebbe vedere:</label>
+            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+          </div>
+        </form>
       </div>
-      <div class="mb-3">
-        <label for="exampleFormControlTextarea1" class="form-label">Comunicaci eventuali bug o nuove feature che vorresti vedere implementate, oltre a nuove località meteo che ti piacerebbe vedere:</label>
-        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-      </div>
-      </form>
     </main>
-    <footer class="footer mt-auto py-3">
+    <div class="container fott">
+      <hr class="featurette-divider">
+      <footer class="footer mt-auto py-3">
       <div class="container">
         <p class="float-end"><a href="#" class="btn btn-outline-primary btn-sm"><i class="bi bi-arrow-up-circle"></i></a></p>
         <p>&copy; <span class="author">Gabriele Stentella</span> &middot; <a href="#" class="btn btn-outline-primary btn-sm">984491</a> &middot; <a href="#" class="btn btn-outline-primary btn-sm">SSRI</a></p>
       </div>
     </footer>
+    </div>
 </body>
 </html>
