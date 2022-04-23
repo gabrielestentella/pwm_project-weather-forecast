@@ -1,0 +1,12 @@
+.navbar {
+	background-color: #e1e5f2;
+}
+body {
+	background-color: #e1e5f2;
+}
+main {
+	padding: 10%;
+}
+main > form {
+	margin-top: 15%;
+}
