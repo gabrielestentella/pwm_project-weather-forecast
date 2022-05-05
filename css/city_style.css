@@ -13,3 +13,11 @@ main > form {
 h1 {
 	text-align: center;
 }
+img {
+	max-width: 30%;
+	border-radius: 5%;
+	float: right;
+}
+@media only screen and (max-width: 1023px) {
+	img {display: none;}
+}
