@@ -1,5 +1,33 @@
+var darkModeActivation = {};
+
 document.addEventListener('DOMContentLoaded', function () {
+	var plh = document.querySelectorAll(".placeholder");
+	plh.forEach(element => element.style.color = "#E2E5F1");
+
   var checkbox = document.querySelector('input[type="checkbox"]');
+
+  var actualDate = new Date().getTime();
+  if(localStorage.getItem('darkmode')) {
+		if(actualDate - JSON.parse(localStorage.getItem('darkmode')).date > 500000000) {
+			localStorage.removeItem('darkmode');
+			darkModeActivation = {
+			darkMode: false,
+			date: new Date().getTime(),
+			};
+			localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
+			}
+  } else {
+  	darkModeActivation = {
+		darkMode: false,
+		date: new Date().getTime(),
+		};
+		localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
+  }
+  
+  if(JSON.parse(localStorage.getItem('darkmode')).darkMode){
+		checkbox.checked = true;
+		dark();
+	}
 
   checkbox.addEventListener('change', function () {
     if (checkbox.checked) {
@@ -29,6 +57,10 @@ function dark () {
 	var overlay = document.querySelectorAll(".overlay");
 		overlay.forEach(element => element.classList.add("bg-bl"));
 		overlay.forEach(element => element.classList.remove("bg-wh"));
+
+	darkModeActivation.darkMode = true;
+	darkModeActivation.date = new Date().getTime();
+	localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
 }
 
 function light () {
@@ -48,6 +80,10 @@ function light () {
 		overlay.forEach(element => element.classList.remove("bg-bl"));
 	var plh = document.querySelectorAll(".placeholder");
 		plh.forEach(element => element.style.color = "#E2E5F1");
+
+	darkModeActivation.darkMode = false;
+	darkModeActivation.date = new Date().getTime();
+	localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
 }
 
 async function getWeather () {
@@ -79,9 +115,6 @@ async function getWeather () {
 	img.src="icons/" + jsonObj.weather[0].icon + ".svg";
 	img.style.width = "1em";
 	document.getElementById('par-icon').appendChild(img);
-
-	var plh = document.querySelectorAll(".placeholder");
-	plh.forEach(element => element.style.color = "#E2E5F1");
 
 	var response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=40.779897&units=metric&lon=-73.968565&appid=4da6d8179a32da39c51e22987d4e663e",{method:"GET"});
 	var jsonObj = await response.json();
@@ -125,3 +158,29 @@ async function getWeather () {
 }
 
 getWeather();
+
+
+async function getUserWeather () {
+	navigator.geolocation.getCurrentPosition(async position => {
+		const latitude = (position.coords.latitude.toFixed(6));
+		const longitude = (position.coords.longitude.toFixed(6));
+		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&lang=it&appid=4da6d8179a32da39c51e22987d4e663e`;
+		var response = await fetch(url);
+		var jsonObj = await response.json();
+		console.log(jsonObj);
+		document.getElementById('userLocation').innerText = jsonObj.name;
+		document.getElementById('user-weather').innerText = jsonObj.weather[0].description;
+		document.getElementById('user-temp').innerText = jsonObj.main.temp + "°C";
+		document.getElementById('user-humidity').innerText = jsonObj.main.humidity + "%";
+		document.getElementById('user-wind').innerText = jsonObj.wind.speed + " m/s";
+		const endpoint = `https://api.unsplash.com/search/photos?query=${searchQuery}&client_id=${apiKey}`;
+		var image = 
+		document.getElementById('geolocation').style.backgroundImage = "url('https://api.unsplash.com/photos?query=rain')";
+	});
+}
+
+getUserWeather ();
+
+// function research () {
+// 	document.getElementById('search-loc').readContent();
+// }

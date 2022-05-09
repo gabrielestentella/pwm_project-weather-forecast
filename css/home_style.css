@@ -95,9 +95,10 @@ body {
 	background-color: #e1e5f2;
 }
 
-.temp > p , .temp > i {
+.temp > p , .temp > i , #geolocation > i , #geolocation > h4 {
 	font-size: 22px;
 	display: inline-block;
+	margin-right: 10px;
 }
 
 .dark-mode {
@@ -119,4 +120,8 @@ body {
   	top: 20%;
   	height: 5em;
   	width: 5em;
+}
+
+#geolocation {
+	text-align: center;
 }
