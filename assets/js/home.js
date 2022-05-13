@@ -40,6 +40,43 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
+let worker = new Worker('js/api-request_service-worker.js');
+var img = document.createElement("img");
+worker.postMessage({
+  apiUrlMilano: "https://api.openweathermap.org/data/2.5/weather?lat=45.464007&units=metric&lon=9.190242&appid=4da6d8179a32da39c51e22987d4e663e",
+  apiUrlLondra: "https://api.openweathermap.org/data/2.5/weather?lat=51.502100&units=metric&lon=-0.140071&appid=4da6d8179a32da39c51e22987d4e663e",
+  apiUrlParigi: "https://api.openweathermap.org/data/2.5/weather?lat=48.856386&units=metric&lon=2.295343&appid=4da6d8179a32da39c51e22987d4e663e",
+  apiUrlNy: "https://api.openweathermap.org/data/2.5/weather?lat=40.779897&units=metric&lon=-73.968565&appid=4da6d8179a32da39c51e22987d4e663e",
+  apiUrlLa: "https://api.openweathermap.org/data/2.5/weather?lat=34.052234&units=metric&lon=-118.243685&appid=4da6d8179a32da39c51e22987d4e663e",
+  apiUrlSydney: "https://api.openweathermap.org/data/2.5/weather?lat=-33.865143&units=metric&lon=151.209900&appid=4da6d8179a32da39c51e22987d4e663e",
+  apiUrlTokyo: "https://api.openweathermap.org/data/2.5/weather?lat=35.685013&units=metric&lon=139.752445&appid=4da6d8179a32da39c51e22987d4e663e",
+});
+worker.addEventListener('message', function (e) {
+      if (e.data.status === 'OK') {
+          document.getElementById('mil-temp').innerText = e.data.result + "°C";
+          img.src=e.data.iconMilano;
+					img.style.width = "1em";
+					document.getElementById('mil-icon').appendChild(img);
+					img.src=iconParigi;
+					img.style.width = "1em";
+					document.getElementById('par-icon').appendChild(img);
+					img.src=iconNy;
+					img.style.width = "4em";
+					document.getElementById('ny-icon').appendChild(img);
+					img.src=iconLa:
+					img.style.width = "4em";
+					document.getElementById('la-icon').appendChild(img);
+					img.src=iconSyd;
+					img.style.width = "4em";
+					document.getElementById('syd-icon').appendChild(img);
+					img.src=iconTk;
+					img.style.width = "4em";
+					document.getElementById('tk-icon').appendChild(img);
+      } else {
+          document.getElementById("mil-temp").textContent = 'error on executing the worker';
+      }
+  }, false);
+
 function dark () {
 	var body = document.body;
 		body.classList.add("dark-mode");
@@ -87,24 +124,24 @@ function light () {
 }
 
 async function getWeather () {
-	var response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=45.464007&units=metric&lon=9.190242&appid=4da6d8179a32da39c51e22987d4e663e",{method:"GET"});
-	var jsonObj = await response.json();
-	console.log(jsonObj);
-	document.getElementById('mil-temp').innerText = jsonObj.main.temp + "°C";
-	var img = document.createElement("img");
-	img.src="icons/" + jsonObj.weather[0].icon + ".svg";
-	img.style.width = "1em";
-	document.getElementById('mil-icon').appendChild(img);
+	// var response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=45.464007&units=metric&lon=9.190242&appid=4da6d8179a32da39c51e22987d4e663e",{method:"GET"});
+	// var jsonObj = await response.json();
+	// console.log(jsonObj);
+	// document.getElementById('mil-temp').innerText = jsonObj.main.temp + "°C";
+	// var img = document.createElement("img");
+	// img.src="icons/" + jsonObj.weather[0].icon + ".svg";
+	// img.style.width = "1em";
+	// document.getElementById('mil-icon').appendChild(img);
 
-	var response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=51.502100&units=metric&lon=-0.140071&appid=4da6d8179a32da39c51e22987d4e663e",{method:"GET"});
-	var jsonObj = await response.json();
-	console.log(jsonObj);
-	document.getElementById('lon-temp').innerText = jsonObj.main.temp + "°C";
+	// var response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=51.502100&units=metric&lon=-0.140071&appid=4da6d8179a32da39c51e22987d4e663e",{method:"GET"});
+	// var jsonObj = await response.json();
+	// console.log(jsonObj);
+	// document.getElementById('lon-temp').innerText = jsonObj.main.temp + "°C";
 	
-	var img = document.createElement("img");
-	img.src="icons/" + jsonObj.weather[0].icon + ".svg";
-	img.style.width = "1em";
-	document.getElementById('lon-icon').appendChild(img);
+	// var img = document.createElement("img");
+	// img.src="icons/" + jsonObj.weather[0].icon + ".svg";
+	// img.style.width = "1em";
+	// document.getElementById('lon-icon').appendChild(img);
 
 	var response = await fetch("https://api.openweathermap.org/data/2.5/weather?lat=48.856386&units=metric&lon=2.295343&appid=4da6d8179a32da39c51e22987d4e663e",{method:"GET"});
 	var jsonObj = await response.json();
@@ -173,14 +210,10 @@ async function getUserWeather () {
 		document.getElementById('user-temp').innerText = jsonObj.main.temp + "°C";
 		document.getElementById('user-humidity').innerText = jsonObj.main.humidity + "%";
 		document.getElementById('user-wind').innerText = jsonObj.wind.speed + " m/s";
-		const endpoint = `https://api.unsplash.com/search/photos?query=${searchQuery}&client_id=${apiKey}`;
-		var image = 
-		document.getElementById('geolocation').style.backgroundImage = "url('https://api.unsplash.com/photos?query=rain')";
+		//const endpoint = `https://api.unsplash.com/search/photos?query=${searchQuery}&client_id=${apiKey}`;
+		//var image = 
+		//document.getElementById('geolocation').style.backgroundImage = "url('https://api.unsplash.com/photos?query=rain')";
 	});
 }
 
 getUserWeather ();
-
-// function research () {
-// 	document.getElementById('search-loc').readContent();
-// }

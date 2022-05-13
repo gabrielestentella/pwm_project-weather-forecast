@@ -1,5 +1,6 @@
 const express = require('express');
 const path = require('path');
+const favicon = require('serve-favicon');
 
 // Configure dotenv package
 require("dotenv").config();
@@ -10,6 +11,8 @@ const port = process.env.PORT || 8080;
 
 //Express static file module
 app.use(express.static(__dirname + '/assets'));
+
+app.use(favicon(__dirname + '/assets/favicon.ico'));
 
 app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '/views/home.html'));
