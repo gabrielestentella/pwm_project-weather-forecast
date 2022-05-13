@@ -1,2 +1,4 @@
 per ottimizzare:
 - processo di rendering in background?? in realtà non si ottimizza, e non credo dia vantaggi perchè comunque la pagina non rimane bloccata
+- convertire le immagini in webp
+- abilitare text compression
