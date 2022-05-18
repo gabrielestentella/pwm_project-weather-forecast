@@ -4,21 +4,21 @@
 
 .caritem1 {
 	height: 600px;
-	background-image: url("../img_carousel/milano.jpeg");
+	background-image: url("/img_carousel/milano.jpeg");
 	background-size: cover;
 	color: black;
 }
 
 .caritem2 {
 	height: 600px;
-	background-image: url("../img_carousel/londra.jpeg");
+	background-image: url("/img_carousel/londra.jpeg");
 	background-size: cover;
 	color: black;
 }
 
 .caritem3 {
 	height: 600px;
-	background-image: url("../img_carousel/parigi.jpeg");
+	background-image: url("/img_carousel/parigi.jpeg");
 	background-size: cover;
 	color: black;
 }
@@ -50,28 +50,28 @@
 }
 
 .card > .card-img-top.ny {
-	background-image: url("../img_cards/nyc.jpeg");
+	background-image: url("/img_cards/nyc.jpeg");
 	background-size: cover;
 	background-position: center;
 	height: 150px;
 }
 
 .card > .card-img-top.la {
-	background-image: url("../img_cards/la.jpeg");
+	background-image: url("/img_cards/la.jpeg");
 	background-size: cover;
 	background-position: center;
 	height: 150px;
 }
 
 .card > .card-img-top.syd {
-	background-image: url("../img_cards/sydney.jpeg");
+	background-image: url("/img_cards/sydney.jpeg");
 	background-size: cover;
 	background-position: center;
 	height: 150px;
 }
 
 .card > .card-img-top.tk {
-	background-image: url("../img_cards/tokyo.jpeg");
+	background-image: url("/img_cards/tokyo.jpeg");
 	background-size: cover;
 	background-position: center;
 	height: 150px;
@@ -124,4 +124,8 @@ body {
 
 #geolocation {
 	text-align: center;
+}
+
+.city > span {
+	margin-right: 10px;
 }
