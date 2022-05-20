@@ -1,28 +1,26 @@
 var darkModeActivation = {};
 
 document.addEventListener('DOMContentLoaded', function () {
-	var plh = document.querySelectorAll(".placeholder");
-	plh.forEach(element => element.style.color = "#E2E5F1");
 
   var checkbox = document.querySelector('input[type="checkbox"]');
 
   var actualDate = new Date().getTime();
   if(localStorage.getItem('darkmode')) {
-		if(actualDate - JSON.parse(localStorage.getItem('darkmode')).date > 500000000) {
-			localStorage.removeItem('darkmode');
-			darkModeActivation = {
-			darkMode: false,
-			date: new Date().getTime(),
+		if(actualDate - JSON.parse(localStorage.getItem('darkmode')).date > 50000) {
+				localStorage.removeItem('darkmode');
+				darkModeActivation = {
+					darkMode: false,
+					date: new Date().getTime(),
+				};
+				localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
+			}
+  	} else {
+	  	darkModeActivation = {
+				darkMode: false,
+				date: new Date().getTime(),
 			};
 			localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
-			}
-  } else {
-  	darkModeActivation = {
-		darkMode: false,
-		date: new Date().getTime(),
-		};
-		localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
-  }
+  	}
   
   if(JSON.parse(localStorage.getItem('darkmode')).darkMode){
 		checkbox.checked = true;
@@ -48,6 +46,7 @@ var img4 = document.createElement("img");
 var img5 = document.createElement("img");
 var img6 = document.createElement("img");
 var img7 = document.createElement("img");
+
 worker.postMessage({
   apiUrlMilano: "https://api.openweathermap.org/data/2.5/weather?lat=45.464007&units=metric&lon=9.190242&appid=4da6d8179a32da39c51e22987d4e663e",
   apiUrlLondra: "https://api.openweathermap.org/data/2.5/weather?lat=51.502100&units=metric&lon=-0.140071&appid=4da6d8179a32da39c51e22987d4e663e",
@@ -138,25 +137,19 @@ function light () {
 	localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
 }
 
-
-async function getUserWeather () {
+(async function getUserWeather () {
 	navigator.geolocation.getCurrentPosition(async position => {
-		const latitude = (position.coords.latitude.toFixed(6));
-		const longitude = (position.coords.longitude.toFixed(6));
-		const today = new Date();
-		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&lang=it&appid=4da6d8179a32da39c51e22987d4e663e`;
-		var response = await fetch(url);
-		var jsonObj = await response.json();
-		console.log(jsonObj);
-		document.getElementById('userLocation').innerText = jsonObj.name;
-		document.getElementById('user-weather').innerText = jsonObj.weather[0].description;
-		document.getElementById('user-temp').innerText = jsonObj.main.temp + "°C";
-		document.getElementById('user-humidity').innerText = jsonObj.main.humidity + "%";
-		document.getElementById('user-wind').innerText = jsonObj.wind.speed + " m/s";
-		//const endpoint = `https://api.unsplash.com/search/photos?query=${searchQuery}&client_id=${apiKey}`;
-		//var image = 
-		//document.getElementById('geolocation').style.backgroundImage = "url('https://api.unsplash.com/photos?query=rain')";
-	});
-}
-
-getUserWeather ();
+	const latitude = (position.coords.latitude.toFixed(6));
+	const longitude = (position.coords.longitude.toFixed(6));
+	const today = new Date();
+	const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&lang=it&appid=4da6d8179a32da39c51e22987d4e663e`;
+	var response = await fetch(url);
+	var jsonObj = await response.json();
+	document.getElementById('userLocation').innerText = jsonObj.name;
+	document.getElementById('user-weather').innerText = jsonObj.weather[0].description;
+	document.getElementById('user-temp').innerText = jsonObj.main.temp + "°C";
+	document.getElementById('user-humidity').innerText = jsonObj.main.humidity + "%";
+	document.getElementById('user-wind').innerText = jsonObj.wind.speed + " m/s";
+	console.log(jsonObj);
+});
+})

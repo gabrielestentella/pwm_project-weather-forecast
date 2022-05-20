@@ -106,6 +106,10 @@ body {
 	color: #dddddd;
 }
 
+.placeholder {
+	color: #E2E5F1;
+}
+
 @media only screen and (max-width: 770px){
 	.form-check, .placeholder{
 		display: inline-block;
