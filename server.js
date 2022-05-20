@@ -18,8 +18,16 @@ app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname, '/views/home.html'));
 });
 
-app.get('/index', function (req, res) {
-    res.sendFile(path.join(__dirname, '/views/home.html'));
+app.get('/home.html', function (req, res) {
+    res.sendFile('/Users/gabriele/Desktop/progetto_pwm/views/home.html');
+});
+
+app.get('/contact.html', function (req, res) {
+    res.sendFile('/Users/gabriele/Desktop/progetto_pwm/views/contact.html');
+});
+
+app.get('/city_template', function (req, res) {
+    res.sendFile('/Users/gabriele/Desktop/progetto_pwm/views/city_template.html');
 });
 
 app.listen(port);

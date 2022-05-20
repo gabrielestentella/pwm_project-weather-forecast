@@ -74,7 +74,6 @@ worker.addEventListener('message', function (e) {
 					document.getElementById('ny-temp').innerText = e.data.tempNy + "°C";
 					img4.src=e.data.iconNy;
 					img4.style.width = "4em";
-					console.log(img4);
 					document.getElementById('ny-icon').appendChild(img4);
 					document.getElementById('la-temp').innerText = e.data.tempLa + "°C";
 					img5.src=e.data.iconLa;
@@ -144,6 +143,7 @@ async function getUserWeather () {
 	navigator.geolocation.getCurrentPosition(async position => {
 		const latitude = (position.coords.latitude.toFixed(6));
 		const longitude = (position.coords.longitude.toFixed(6));
+		const today = new Date();
 		const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&lang=it&appid=4da6d8179a32da39c51e22987d4e663e`;
 		var response = await fetch(url);
 		var jsonObj = await response.json();
