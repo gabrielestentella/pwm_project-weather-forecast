@@ -12,6 +12,11 @@ body {
     padding-top: 0px;
   }
 }
+@media (max-width: 345px) {
+  #uni {
+    display: none;
+  }
+}
 h1 {
 	text-align: center;
 }

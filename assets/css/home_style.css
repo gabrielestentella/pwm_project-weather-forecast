@@ -113,6 +113,18 @@ body {
 	}
 }
 
+@media (max-width: 345px) {
+  #uni {
+    display: none;
+  }
+}
+
+@media (max-width: 360px) {
+	#decoration-icon {
+		display: none;
+	}
+}
+
 .card > .icon {
 	position: absolute;
   	left: 50%;
