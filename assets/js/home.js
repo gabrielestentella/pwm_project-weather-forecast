@@ -10,7 +10,7 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var actualDate = new Date().getTime();
   if(localStorage.getItem('darkmode')) {
-		if(actualDate - JSON.parse(localStorage.getItem('darkmode')).date > 50000) {
+		if((actualDate - JSON.parse(localStorage.getItem('darkmode')).date) > 86400000) {
 				localStorage.removeItem('darkmode');
 				darkModeActivation = {
 					darkMode: false,
