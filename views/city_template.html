@@ -14,44 +14,51 @@
   </head>
 <body>
 	<header>
-  	  	<nav class="navbar navbar-expand-md navbar-light fixed-top">
-  	    <div class="container-fluid">
-  	      <a class="navbar-brand" href="home.html">Meteo</a>
+        <nav class="navbar navbar-expand-md navbar-light fixed-top">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="home.html">Meteo</a>
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
           <div class="collapse navbar-collapse" id="navbarCollapse">
             <ul class="navbar-nav me-auto mb-2 mb-md-0">
               <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="/home.html">Home</a>
-  	          </li>
-  	          <li class="nav-item dropdown">
+                <a class="nav-link" aria-current="page" href="home.html">Home</a>
+              </li>
+              <li class="nav-item dropdown">
                 <a class="nav-link dropdown-toggle active" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                   Località
                 </a>
                 <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                  <li><a class="dropdown-item" href="cities/milano.html">Milano</a></li>
-                  <li><a class="dropdown-item" href="cities/londra.html">Londra</a></li>
-                  <li><a class="dropdown-item" href="cities/parigi.html">Parigi</a></li>
+                  <li><a class="dropdown-item" href="milano">Milano</a></li>
+                  <li><a class="dropdown-item" href="londra">Londra</a></li>
+                  <li><a class="dropdown-item" href="parigi">Parigi</a></li>
                 </ul>
               </li>
               <li class="nav-item">
                 <a class="nav-link" aria-current="page" href="contact.html">Contattaci</a>
               </li>
-  	        </ul>
-
-  	        <form class="d-flex">
-  	          <input class="form-control me-3" type="search" placeholder="Inserisci una località" aria-label="Search">
-  	          	<button class="btn btn-light" type="submit">
-  		            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
-  	  					    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
-  					      </svg>
-  				      </button>
-  	        </form>
-  	      </div>
-  	    </div>
-  	  </nav>
-  	</header>
+            </ul>
+            
+            <form class="d-flex">
+              <input class="form-control me-3" type="search" placeholder="Inserisci una località" aria-label="Search" id="search-loc">
+                <button class="btn btn-light" type="submit">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
+                    <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/>
+                  </svg>
+                </button>
+            </form>
+            <div class="placeholder"></div>
+            <i class="bi bi-sun"></i>
+            <div class="placeholder"></div>
+            <span class="form-check form-switch">
+              <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+            </span>
+            <i class="bi bi-moon"></i>
+          </div>
+        </div>
+      </nav>
+    </header>
     <main>
       <div class="container">
         <h1 id="city-name"></h1>
@@ -71,4 +78,57 @@
     </footer>
     </div>
 </body>
+
+<script type="text/javascript">
+  var checkbox = document.querySelector('input[type="checkbox"]');
+
+  document.addEventListener('DOMContentLoaded', function () {
+      if(JSON.parse(localStorage.getItem('darkmode')).darkMode) {
+      checkbox.checked = true;
+      dark();
+    }
+  });
+
+  checkbox.addEventListener('change', function () {
+    if (checkbox.checked) {
+      dark();
+      console.log('Dark mode on');
+    } else {
+      light();
+      console.log('Dark mode off');
+    }
+  });
+
+  function light () {
+    var navbar = document.querySelector(".navbar");
+    navbar.classList.add("navbar-light");
+    navbar.classList.remove("navbar-dark");
+    navbar.classList.remove("bg-dark");
+    document.body.classList.remove("dark-mode");
+    var plh = document.querySelectorAll(".placeholder");
+    plh.forEach(element => element.style.color = "#E2E5F1");
+    darkModeActivation = {
+      darkMode: false,
+      date: new Date().getTime(),
+    };
+    localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation));
+  }
+
+  function dark () {
+    document.querySelector('input[type="checkbox"]').checked = true;
+    document.body.classList.add("dark-mode");
+    var navbar = document.querySelector(".navbar");
+    navbar.classList.remove("navbar-light");
+    navbar.classList.add("navbar-dark");
+    navbar.classList.add("bg-dark");
+    var plh = document.querySelectorAll(".placeholder");
+    plh.forEach(element => element.style.color = "#222529");
+    darkModeActivation = {
+      darkMode: true,
+      date: new Date().getTime(),
+    };
+    localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation));
+  }
+</script>
+
 </html>

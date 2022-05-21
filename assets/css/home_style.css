@@ -47,6 +47,7 @@
 
 .placeholder {
 	width: 0.5%;
+	color: #E2E5F1;
 }
 
 .card > .card-img-top.ny {
@@ -106,9 +107,6 @@ body {
 	color: #dddddd;
 }
 
-.placeholder {
-	color: #E2E5F1;
-}
 
 @media only screen and (max-width: 770px){
 	.form-check, .placeholder{

@@ -75,22 +75,21 @@ workerApi.addEventListener('message', function (e) {
   }, false);
 
 function dark () {
-	var body = document.body;
-		body.classList.add("dark-mode");
+	document.body.classList.add("dark-mode");
 	var navbar = document.querySelector(".navbar");
-		navbar.classList.remove("navbar-light");
-		navbar.classList.add("navbar-dark");
-		navbar.classList.add("bg-dark");
+	navbar.classList.remove("navbar-light");
+	navbar.classList.add("navbar-dark");
+	navbar.classList.add("bg-dark");
 	var plh = document.querySelectorAll(".placeholder");
-		plh.forEach(element => element.style.color = "#222529");
+	plh.forEach(element => element.style.color = "#222529");
 	var cards = document.querySelectorAll(".card-body");
-		cards.forEach(element => element.classList.add("dark-mode"));
+	cards.forEach(element => element.classList.add("dark-mode"));
 	var buttons = document.querySelectorAll(".card-body > .btn");
-		buttons.forEach(element => element.classList.add("btn-outline-light"));
-		buttons.forEach(element => element.classList.remove("btn-outline-dark"));
+	buttons.forEach(element => element.classList.add("btn-outline-light"));
+	buttons.forEach(element => element.classList.remove("btn-outline-dark"));
 	var overlay = document.querySelectorAll(".overlay");
-		overlay.forEach(element => element.classList.add("bg-bl"));
-		overlay.forEach(element => element.classList.remove("bg-wh"));
+	overlay.forEach(element => element.classList.add("bg-bl"));
+	overlay.forEach(element => element.classList.remove("bg-wh"));
 
 	darkModeActivation.darkMode = true;
 	darkModeActivation.date = new Date().getTime();
@@ -99,21 +98,20 @@ function dark () {
 
 function light () {
 	var navbar = document.querySelector(".navbar");
-		navbar.classList.add("navbar-light");
-		navbar.classList.remove("navbar-dark");
-		navbar.classList.remove("bg-dark");
-	var body = document.body;
-		body.classList.remove("dark-mode");
+	navbar.classList.add("navbar-light");
+	navbar.classList.remove("navbar-dark");
+	navbar.classList.remove("bg-dark");
+	document.body.classList.remove("dark-mode");
 	var cards = document.querySelectorAll(".card-body");
-		cards.forEach(element => element.classList.remove("dark-mode"));
+	cards.forEach(element => element.classList.remove("dark-mode"));
 	var buttons = document.querySelectorAll(".card-body > .btn");
-		buttons.forEach(element => element.classList.remove("btn-outline-light"));
-		buttons.forEach(element => element.classList.add("btn-outline-dark"));
+	buttons.forEach(element => element.classList.remove("btn-outline-light"));
+	buttons.forEach(element => element.classList.add("btn-outline-dark"));
 	var overlay = document.querySelectorAll(".overlay");
-		overlay.forEach(element => element.classList.add("bg-wh"));
-		overlay.forEach(element => element.classList.remove("bg-bl"));
+	overlay.forEach(element => element.classList.add("bg-wh"));
+	overlay.forEach(element => element.classList.remove("bg-bl"));
 	var plh = document.querySelectorAll(".placeholder");
-		plh.forEach(element => element.style.color = "#E2E5F1");
+	plh.forEach(element => element.style.color = "#E2E5F1");
 
 	darkModeActivation.darkMode = false;
 	darkModeActivation.date = new Date().getTime();
