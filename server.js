@@ -26,7 +26,7 @@ app.get('/contact.html', function (req, res) {
     res.sendFile('/Users/gabriele/Desktop/progetto_pwm/views/contact.html');
 });
 
-app.get('/city_template', function (req, res) {
+app.get('/city_template/', function (req, res) {
     res.sendFile('/Users/gabriele/Desktop/progetto_pwm/views/city_template.html');
 });
 

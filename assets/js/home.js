@@ -40,6 +40,13 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('Dark mode off');
     }
   });
+
+  document.getElementById('search-loc').addEventListener('keypress', e => {
+  	if(e.key === 'Enter'){
+  		e.preventDefault();
+  		search();
+  	}
+  });
 });
 
 let workerApi = new Worker('js/api-request_service-worker.js');
@@ -155,3 +162,11 @@ var weatherDes;
 	})
 	})
 })();
+
+function search () {
+	var loc = document.getElementById('search-loc');
+	console.log(loc.value);
+	window.open(`city_template${loc.value}`, '_self')
+
+}
+

@@ -13,7 +13,6 @@ document.addEventListener('DOMContentLoaded', function () {
       console.log('Dark mode off');
     }
   });
-  thankYou();
 
   document.getElementById('search-loc').addEventListener('keypress', e => {
     if(e.key === 'Enter'){
@@ -54,14 +53,6 @@ function dark () {
   };
   localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation));
 }
-
-function thankYou () {
-  document.getElementById('sub-button').addEventListener('click', function () {
-    document.getElementById('content').style.display = 'none';
-    document.getElementsByTagName('h1')[0].innerText = 'Grazie per il tuo contributo!';
-    
-  });  
-};
 
 function search () {
   var loc = document.getElementById('search-loc');
