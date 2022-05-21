@@ -1,6 +1,10 @@
 var darkModeActivation = {};
 
 document.addEventListener('DOMContentLoaded', function () {
+	var images = document.querySelectorAll("img");
+	images.forEach(element => {
+		element.style.display = "none";
+	})
 
   var checkbox = document.querySelector('input[type="checkbox"]');
 
@@ -66,7 +70,7 @@ workerApi.addEventListener('message', function (e) {
 					document.getElementById('tk-temp').innerText = e.data.tempTokyo + "°C";
 					document.getElementById('tk-icon').src = e.data.iconTk;
       } else {
-          document.getElementById("mil-temp").textContent = 'error on executing the worker';
+          alert('error on executing the worker for API calls');
       }
   }, false);
 
@@ -116,6 +120,7 @@ function light () {
 	localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
 }
 
+let workerPhoto = new Worker('js/photo_service-worker.js');
 var userLoc;
 var weatherDes;
 (async function getUserWeather () {
@@ -134,15 +139,21 @@ var weatherDes;
 	document.getElementById('user-humidity').innerText = jsonObj.main.humidity + "%";
 	document.getElementById('user-wind').innerText = jsonObj.wind.speed + " m/s";
 	console.log(jsonObj);
-});
+
+	workerPhoto.postMessage({
+		userLocation : userLoc,
+		weatherDescription : weatherDes,
+	});
+	workerPhoto.addEventListener('message', function(e) {
+		if(e.data.status === 'OK') {
+			document.getElementById('user-photo').src = e.data.url;
+			var images = document.querySelectorAll("img");
+	  	images.forEach(element => {
+			element.style.display = "inline-block";
+			})
+		} else {
+		alert('error on executing the worker to load photos');
+		}
+	})
+	})
 })();
-
-let workerPhoto = new Worker('js/photo_service-worker.js');
-workerPhoto.postMessage({
-	userLocation : userLoc,
-	weatherDescription : weatherDes,
-});
-
-workerPhoto.addEventListener('message', function(e) {
-	document.getElementById('user-photo').src = e.data.url;
-})

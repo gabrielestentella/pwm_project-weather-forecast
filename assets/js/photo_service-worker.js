@@ -22,6 +22,7 @@ self.addEventListener('message', async function(e){
 
 	self.postMessage({
 		'url' : photoUrl,
+		'status' : 'OK',
 	})
 
 }, false);
