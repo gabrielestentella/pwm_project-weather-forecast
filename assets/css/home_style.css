@@ -133,7 +133,7 @@ body {
 	position: absolute;
   	left: 50%;
   	transform: translate(-50%, 0%);
-  	top: 20%;
+  	top: 15%;
   	height: 5em;
   	width: 5em;
 }
@@ -144,4 +144,9 @@ body {
 
 .city > span {
 	margin-right: 10px;
+}
+
+.city > img {
+	margin-right: 10px;
+	width: 1.5em;
 }

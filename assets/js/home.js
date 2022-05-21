@@ -38,16 +38,9 @@ document.addEventListener('DOMContentLoaded', function () {
   });
 });
 
-let worker = new Worker('js/api-request_service-worker.js');
-var img1 = document.createElement("img");
-var img2 = document.createElement("img");
-var img3 = document.createElement("img");
-var img4 = document.createElement("img");
-var img5 = document.createElement("img");
-var img6 = document.createElement("img");
-var img7 = document.createElement("img");
+let workerApi = new Worker('js/api-request_service-worker.js');
 
-worker.postMessage({
+workerApi.postMessage({
   apiUrlMilano: "https://api.openweathermap.org/data/2.5/weather?lat=45.464007&units=metric&lon=9.190242&appid=4da6d8179a32da39c51e22987d4e663e",
   apiUrlLondra: "https://api.openweathermap.org/data/2.5/weather?lat=51.502100&units=metric&lon=-0.140071&appid=4da6d8179a32da39c51e22987d4e663e",
   apiUrlParigi: "https://api.openweathermap.org/data/2.5/weather?lat=48.856386&units=metric&lon=2.295343&appid=4da6d8179a32da39c51e22987d4e663e",
@@ -56,36 +49,22 @@ worker.postMessage({
   apiUrlSydney: "https://api.openweathermap.org/data/2.5/weather?lat=-33.865143&units=metric&lon=151.209900&appid=4da6d8179a32da39c51e22987d4e663e",
   apiUrlTokyo: "https://api.openweathermap.org/data/2.5/weather?lat=35.685013&units=metric&lon=139.752445&appid=4da6d8179a32da39c51e22987d4e663e",
 });
-worker.addEventListener('message', function (e) {
+workerApi.addEventListener('message', function (e) {
       if (e.data.status === 'OK') {
           document.getElementById('mil-temp').innerText = e.data.tempMilano + "°C";
-          img1.src=e.data.iconMil;
-					img1.style.width = "1em";
-					document.getElementById('mil-icon').appendChild(img1);
+					document.getElementById('mil-icon').src = e.data.iconMil;
 					document.getElementById('lon-temp').innerText = e.data.tempLondra + "°C";
-					img2.src=e.data.iconLon;
-					img2.style.width = "1em";
-					document.getElementById('lon-icon').appendChild(img2);
+					document.getElementById('lon-icon').src = e.data.iconLon;
 					document.getElementById('par-temp').innerText = e.data.tempParigi + "°C";
-					img3.src=e.data.iconPar;
-					img3.style.width = "1em";
-					document.getElementById('par-icon').appendChild(img3);
+					document.getElementById('par-icon').src = e.data.iconPar;
 					document.getElementById('ny-temp').innerText = e.data.tempNy + "°C";
-					img4.src=e.data.iconNy;
-					img4.style.width = "4em";
-					document.getElementById('ny-icon').appendChild(img4);
+					document.getElementById('ny-icon').src=e.data.iconNy;
 					document.getElementById('la-temp').innerText = e.data.tempLa + "°C";
-					img5.src=e.data.iconLa;
-					img5.style.width = "4em";
-					document.getElementById('la-icon').appendChild(img5);
+					document.getElementById('la-icon').src = e.data.iconLa;
 					document.getElementById('syd-temp').innerText = e.data.tempSydney + "°C";
-					img6.src=e.data.iconSyd;
-					img6.style.width = "4em";
-					document.getElementById('syd-icon').appendChild(img6);
+					document.getElementById('syd-icon').src=e.data.iconSyd;
 					document.getElementById('tk-temp').innerText = e.data.tempTokyo + "°C";
-					img7.src=e.data.iconTk;
-					img7.style.width = "4em";
-					document.getElementById('tk-icon').appendChild(img7);
+					document.getElementById('tk-icon').src = e.data.iconTk;
       } else {
           document.getElementById("mil-temp").textContent = 'error on executing the worker';
       }
@@ -137,6 +116,8 @@ function light () {
 	localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
 }
 
+var userLoc;
+var weatherDes;
 (async function getUserWeather () {
 	navigator.geolocation.getCurrentPosition(async position => {
 	const latitude = (position.coords.latitude.toFixed(6));
@@ -145,11 +126,23 @@ function light () {
 	const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&lang=it&appid=4da6d8179a32da39c51e22987d4e663e`;
 	var response = await fetch(url);
 	var jsonObj = await response.json();
-	document.getElementById('userLocation').innerText = jsonObj.name;
-	document.getElementById('user-weather').innerText = jsonObj.weather[0].description;
+	userLoc = jsonObj.name;
+	weatherDes = jsonObj.weather[0].description;
+	document.getElementById('userLocation').innerText = userLoc;
+	document.getElementById('user-weather').innerText = weatherDes;
 	document.getElementById('user-temp').innerText = jsonObj.main.temp + "°C";
 	document.getElementById('user-humidity').innerText = jsonObj.main.humidity + "%";
 	document.getElementById('user-wind').innerText = jsonObj.wind.speed + " m/s";
 	console.log(jsonObj);
 });
+})();
+
+let workerPhoto = new Worker('js/photo_service-worker.js');
+workerPhoto.postMessage({
+	userLocation : userLoc,
+	weatherDescription : weatherDes,
+});
+
+workerPhoto.addEventListener('message', function(e) {
+	document.getElementById('user-photo').src = e.data.url;
 })
