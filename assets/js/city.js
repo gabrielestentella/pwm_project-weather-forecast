@@ -57,6 +57,6 @@ function dark () {
 function search () {
   var loc = document.getElementById('search-loc');
   console.log(loc.value);
-  window.open(`city_template${loc.value}`, '_self')
+  window.open(`search_${loc.value}`, '_self')
 
 }

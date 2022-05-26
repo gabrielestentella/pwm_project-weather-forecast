@@ -39,3 +39,9 @@ body{
   background-color: black;
   color: #dddddd;
 }
+#rth {
+  display: none;
+}
+#finalButton {
+  text-align: center;
+}

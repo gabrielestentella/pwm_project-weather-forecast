@@ -58,6 +58,7 @@ function dark () {
 function thankYou () {
   document.getElementById('sub-button').addEventListener('click', function () {
     document.getElementById('content').style.display = 'none';
+    document.getElementById('rth').style.display = 'inline-block';
     document.getElementsByTagName('h1')[0].innerText = 'Grazie per il tuo contributo!';
     
   });  
@@ -66,6 +67,6 @@ function thankYou () {
 function search () {
   var loc = document.getElementById('search-loc');
   console.log(loc.value);
-  window.open(`city_template${loc.value}`, '_self')
+  window.open(`search_${loc.value}`, '_self')
 
 }
