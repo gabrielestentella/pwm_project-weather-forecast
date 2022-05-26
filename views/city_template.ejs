@@ -3,7 +3,7 @@
 <head>
   	<meta charset="utf-8">
   	<meta name="viewport" content="width=device-width, initial-scale=1">
-  	<title>Ricerca</title>
+  	<title><%= title %></title>
     <link rel="stylesheet" type="text/css" href="css/city_style.css">
     <script type="text/javascript" src="js/city.js"></script>
 
@@ -59,13 +59,31 @@
         </div>
       </nav>
     </header>
+    <h1 id="city-name"><%= title %>, <%= country %></h1>
     <main>
-      <div class="container">
-        <h1 id="city-name"></h1>
-        <h5 id="weather-description"></h5>
-        <i class="bi bi-thermometer-half"></i><p id="temperature"></p>
-        <i class="bi bi-wind"></i><p id="wind"></p>
-        <i class="bi bi-moisture"></i><p id="humidity"></p>
+      <div class="container mc">
+        <div class="alert alert-<%= danger %>" role="alert">
+          <%= alert %>
+        </div>
+        <div id="general-info">
+          In questo momento:<br>
+          <h5><%= description %></h5>
+          <i class="bi bi-thermometer-half"></i><span> <%= temperature %> °C</span><br>
+          <i class="bi bi-thermometer-high"></i><span> <%= temperature_perc %> °C</span><br>
+          <i class="bi bi-wind"></i><span> <%= wind %> m/s</span><br>
+          <i class="bi bi-moisture"></i><span> <%= humidity %> %</span><br>
+          <i class="bi bi-clouds"></i><span> <%= clouds %> %</span>
+        </div>
+        <div id="forecast">
+          Previsioni per domani:<br>
+          <h5><%= tomorrow_description %></h5>
+          <i class="bi bi-thermometer-sun"></i><span> <%= tomorrow_max_temperature %> °C</span><br>
+          <i class="bi bi-thermometer-snow"></i><span> <%= tomorrow_min_temperature %> °C</span><br>
+          <i class="bi bi-wind"></i><span> <%= tomorrow_wind %> m/s</span><br>
+          <i class="bi bi-moisture"></i><span> <%= tomorrow_humidity %> %</span><br>
+          <i class="bi bi-clouds"></i><span> <%= tomorrow_clouds %> %</span>
+        </div>
+        <img class="rounded" src="<%= url %>">
       </div>
     </main>
     <div class="container">

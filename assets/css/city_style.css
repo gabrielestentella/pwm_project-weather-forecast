@@ -36,3 +36,20 @@ body{
   background-color: black;
   color: #dddddd;
 }
+main {
+  font-size: 2em;
+}
+img {
+  width: 80%;
+  max-height: 50%;
+}
+#general-info {
+  display: inline-block;
+}
+#forecast {
+  display: inline-block;
+  margin-left: 50px;
+}
+.mc {
+  text-align: center;
+}
