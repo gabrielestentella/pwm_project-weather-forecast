@@ -43,22 +43,22 @@ app.get('/search_:cityname/', function (req, response) {
 		axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=hourly,minutely&units=metric&lang=it&appid=4da6d8179a32da39c51e22987d4e663e`)
 		.then(async res => {
 			jsonObj = await res.data;
-			desc = await jsonObj.current.weather[0].description;
-			temp = await jsonObj.current.temp;
-			wind = await jsonObj.current.wind_speed;
-			hum = await jsonObj.current.humidity;
-			t_per = await jsonObj.current.feels_like;
-			clouds = await jsonObj.current.clouds;
-			tmax = await jsonObj.daily[0].temp.max;
-			tmin = await jsonObj.daily[0].temp.min;
-			t_wind = await jsonObj.daily[0].wind_speed;
-			t_hum = await jsonObj.daily[0].humidity;
-			t_desc = await jsonObj.daily[0].weather[0].description;
-			t_clouds = await jsonObj.daily[0].clouds;
+			desc = jsonObj.current.weather[0].description;
+			temp = jsonObj.current.temp;
+			wind = jsonObj.current.wind_speed;
+			hum = jsonObj.current.humidity;
+			t_per = jsonObj.current.feels_like;
+			clouds = jsonObj.current.clouds;
+			tmax = jsonObj.daily[0].temp.max;
+			tmin = jsonObj.daily[0].temp.min;
+			t_wind = jsonObj.daily[0].wind_speed;
+			t_hum = jsonObj.daily[0].humidity;
+			t_desc = jsonObj.daily[0].weather[0].description;
+			t_clouds = jsonObj.daily[0].clouds;
 			desc = await desc.charAt(0).toUpperCase() + desc.slice(1).toLowerCase();
 			t_desc = await t_desc.charAt(0).toUpperCase() + t_desc.slice(1).toLowerCase();
 			if (jsonObj.alerts) {
-				al = await jsonObj.alerts[0].event;
+				al = jsonObj.alerts[0].event;
 				danger = 'danger';
 			}else {
 				al = 'Nessuna Allerta';
@@ -81,10 +81,25 @@ app.get('/search_:cityname/', function (req, response) {
 				url = null;
 			}
 			setTimeout(async () => {
-				setTimeout(async () => {
-					response.render('city_template.ejs', {title : nameCapitalised, country : country, danger : danger, description : desc, temperature : temp, wind : wind, humidity : hum, temperature_perc : t_per, clouds : clouds, tomorrow_description : t_desc, tomorrow_max_temperature : tmax, tomorrow_min_temperature : tmin, tomorrow_wind : t_wind, tomorrow_humidity : t_hum, tomorrow_clouds : t_clouds, url : url, alert : al});
-				}, 200);
-			})
+				response.render('city_template.ejs', {
+					title : nameCapitalised, 
+					country : country,  
+					description : desc, 
+					temperature : temp, 
+					wind : wind, 
+					humidity : hum, 
+					temperature_perc : t_per, 
+					clouds : clouds, 
+					tomorrow_description : t_desc, 
+					tomorrow_max_temperature : tmax, 
+					tomorrow_min_temperature : tmin, 
+					tomorrow_wind : t_wind, 
+					tomorrow_humidity : t_hum, 
+					tomorrow_clouds : t_clouds, 
+					url : url, 
+					danger : danger,
+					alert : al});
+			}, 200);
 		})
 	})
 });
