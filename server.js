@@ -30,6 +30,7 @@ app.get('/contact.html', function (req, res) {
     res.sendFile('/Users/gabriele/Desktop/progetto_pwm/views/contact.html');
 });
 
+//dinamic construction of the page when the user search something
 app.get('/search_:cityname/', function (req, response) {
 	const name = req.params.cityname;
 	const nameCapitalised = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
