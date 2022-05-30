@@ -40,6 +40,9 @@
               <li class="nav-item">
                 <a class="nav-link active" aria-current="page" href="contact.html">Contattaci</a>
               </li>
+              <li class="nav-item">
+                <a class="nav-link" aria-current="page" id="openLogin">Pagina personale</a>
+              </li>
             </ul>
             
             <form class="d-flex">
@@ -65,21 +68,53 @@
           <h4>
           Cerchiamo di migliorare il nostro servizio ogni giorno, grazie ai feedback dei nostri utenti aggiungiamo nuove funzionalità e ottimizziamo il sito per rendere l'esperienza d'uso sempre migliore.
           </h4>
-        <form>
+        <form action = "http://127.0.0.1:3000/tips" method = "POST">
           <div class="mb-3">
             <label for="userEmail" class="form-label">Email</label>
-            <input type="email" class="form-control" id="FormControlInput1" placeholder="name@example.com">
+            <input type="email" class="form-control" id="FormControlInput1" placeholder="name@example.com" name="us_email">
           </div>
           <div class="mb-3">
             <label for="tips" class="form-label">Comunicaci eventuali bug o nuove feature che vorresti vedere implementate, oltre a nuove località meteo che ti piacerebbe vedere:</label>
-            <textarea class="form-control" id="FormControlTextarea1" rows="3"></textarea>
+            <textarea class="form-control" id="FormControlTextarea1" rows="3" name="tip"></textarea>
           </div>
-          <div class="btn btn-outline-primary" id="sub-button">Invia</div>
+          <input type="submit" class="btn btn-outline-primary" id="sub-button"></input>
         </form>
       </div>
       <div class="container" id="finalButton">
         <a href="home.html" class="btn btn-outline-primary" id="rth">Torna alla Home</a>
       </div>
+
+      <div id="popup" class="mod">
+        <div id="logContent" class="mod-content">
+          <span class="close">&times;</span>
+
+          <div id="login">
+            <h1>Login</h1>
+            <form action = "http://127.0.0.1:3000/login" method = "POST">
+              Username: <input class="form-control" type = "text" name = "user_id"><br>
+              Password: <input class="form-control" type = "password" name = "pass"><br>
+              <input class="btn btn-outline-light" type = "submit" value = "Invia">
+            </form>
+            <span class="link-secondary registerBtn">Non hai un account? Registrati</span>
+          </div>
+
+          <div id="register">
+            <h1>Registrati:</h1>
+            <form action = "http://127.0.0.1:3000/register" method = "POST">
+              Nome: <input class="form-control" type="text" name="user_name"><br>
+              Cognome: <input class="form-control" type="text" name="user_surname"><br>
+              Username: <input class="form-control" type = "text" name = "user_id"><br>
+              Password: <input class="form-control" type = "password" name = "pass"><br>
+              Città principale: <input class="form-control" type = "text" name = "city"><br>
+              <input class="btn btn-outline-light" type = "submit" value = "Invia"><br>
+              <span class="link-secondary" id="loginBtn">Hai già un account? Accedi</span>
+            </form>
+          </div>
+        </div>
+      </div>
+
+      <div id="error" class="alert alert-danger"></div>
+      
     </main>
     <div class="container">
       <hr class="featurette-divider">

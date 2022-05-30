@@ -1,0 +1,16 @@
+.navbar {
+	background-color: #e1e5f2;
+}
+body {
+	background-color: #e1e5f2;
+	padding-top: 60px;
+}
+@media (max-width: 760px) {
+  main {
+    padding-top: 0px;
+  }
+}
+.dark-mode {
+  background-color: black;
+  color: #dddddd;
+}

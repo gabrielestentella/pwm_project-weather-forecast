@@ -34,10 +34,8 @@ document.addEventListener('DOMContentLoaded', function () {
   checkbox.addEventListener('change', function () {
     if (checkbox.checked) {
       dark();
-      console.log('Dark mode on');
     } else {
       light();
-      console.log('Dark mode off');
     }
   });
 
@@ -47,6 +45,51 @@ document.addEventListener('DOMContentLoaded', function () {
   		search();
   	}
   });
+
+	var modal = document.getElementById("popup");
+	var openLogin = document.getElementById("openLogin");
+	var span = document.getElementsByClassName("close")[0];
+	var registerBtn = document.getElementsByClassName("registerBtn");
+	var loginBtn = document.getElementById("loginBtn");
+	var login = document.getElementById("login");
+	var register = document.getElementById("register");
+	var carInd = document.getElementsByClassName("carousel-indicators")[0];
+	openLogin.onclick = async function() {
+		c = await getCookie();
+		if (c) {
+			window.open(`private_${c}`, '_self');
+		} else {
+			modal.style.display = "block";
+	  	carInd.style.visibility = "hidden";
+		}
+	}
+	span.onclick = function() {
+	  	modal.style.display = "none";
+	  	carInd.style.visibility = "visible";
+	}
+	registerBtn[0].onclick = function () {
+		login.style.display = "none";
+		register.style.display = "inline-block";
+	}
+	registerBtn[1].onclick = function () {
+		login.style.display = "none";
+		register.style.display = "inline-block";
+		modal.style.display = "block";
+	  carInd.style.visibility = "hidden";
+	}
+	loginBtn.onclick = function () {
+		login.style.display = "inline-block";
+		register.style.display = "none";
+	}
+	window.onclick = function(event) {
+	  if (event.target == modal) {
+	    modal.style.display = "none";
+	    carInd.style.visibility = "visible";
+	  }
+	  document.getElementById('error').style.display = 'none';
+	}
+
+	getError();
 });
 
 let workerApi = new Worker('js/api-request_service-worker.js');
@@ -166,7 +209,23 @@ var weatherDes;
 function search () {
 	var loc = document.getElementById('search-loc');
 	console.log(loc.value);
-	window.open(`search_${loc.value}`, '_self')
+	window.open(`search_${loc.value}`, '_self');
 
 }
 
+async function getError() {
+  	var errorBanner = document.getElementById('error');
+	  var response = await fetch('http://127.0.0.1:3000/get_errors');
+	  var jsonObj = await response.json();
+	  if (jsonObj.errorOccured) {
+	  	errorBanner.style.display = 'inline-block';
+	  	errorBanner.innerText = jsonObj.errorMessage;
+	  }
+	};
+
+	async function getCookie() {
+		var response = await fetch('http://127.0.0.1:3000/cookies');
+		jsonObj = await response.json();
+		console.log(await jsonObj);
+			return await jsonObj;
+	}
