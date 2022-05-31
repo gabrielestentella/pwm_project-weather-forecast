@@ -1,6 +1,7 @@
 var darkModeActivation = {};
 
 document.addEventListener('DOMContentLoaded', function () {
+	// don't want to show images until they are loaded
 	var images = document.querySelectorAll("img");
 	images.forEach(element => {
 		element.style.display = "none";
@@ -8,9 +9,10 @@ document.addEventListener('DOMContentLoaded', function () {
 
   var checkbox = document.querySelector('input[type="checkbox"]');
 
+  // check if there is a visaulization option stored in local storage
   var actualDate = new Date().getTime();
   if(localStorage.getItem('darkmode')) {
-		if((actualDate - JSON.parse(localStorage.getItem('darkmode')).date) > 86400000) {
+		if((actualDate - JSON.parse(localStorage.getItem('darkmode')).date) > 8640000) { //if there is an option, and it is older than 24h, delete that option
 				localStorage.removeItem('darkmode');
 				darkModeActivation = {
 					darkMode: false,
@@ -19,19 +21,19 @@ document.addEventListener('DOMContentLoaded', function () {
 				localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
 			}
   	} else {
-	  	darkModeActivation = {
+	  	darkModeActivation = { //if there is not an option, set it to light mode
 				darkMode: false,
 				date: new Date().getTime(),
 			};
 			localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
   	}
   
-  if(JSON.parse(localStorage.getItem('darkmode')).darkMode){
+  if(JSON.parse(localStorage.getItem('darkmode')).darkMode){ //if the option is set to dark mode, apply the dark mode
 		checkbox.checked = true;
 		dark();
 	}
 
-  checkbox.addEventListener('change', function () {
+  checkbox.addEventListener('change', function () { //make working the checkbox to change visualization
     if (checkbox.checked) {
       dark();
     } else {
@@ -39,13 +41,15 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   });
 
-  document.getElementById('search-loc').addEventListener('keypress', e => {
+  document.getElementById('search-loc').addEventListener('keypress', e => { //pressing the enter button in the search bar, it starts the research
   	if(e.key === 'Enter'){
   		e.preventDefault();
   		search();
   	}
   });
 
+
+  // modal for login/register
 	var modal = document.getElementById("popup");
 	var openLogin = document.getElementById("openLogin");
 	var span = document.getElementsByClassName("close")[0];
@@ -56,18 +60,18 @@ document.addEventListener('DOMContentLoaded', function () {
 	var carInd = document.getElementsByClassName("carousel-indicators")[0];
 	openLogin.onclick = async function() {
 		c = await getCookie();
-		if (c) {
+		if (c) { //if there is a cookie, the user is authenticated, so it loads the private page of the user, taking informations from the cookie
 			window.open(`private_${c}`, '_self');
-		} else {
+		} else { //if there is not a cookie, the user must log in o register
 			modal.style.display = "block";
 	  	carInd.style.visibility = "hidden";
 		}
 	}
-	span.onclick = function() {
+	span.onclick = function() { //x to close the modal
 	  	modal.style.display = "none";
 	  	carInd.style.visibility = "visible";
 	}
-	registerBtn[0].onclick = function () {
+	registerBtn[0].onclick = function () {//link to register page
 		login.style.display = "none";
 		register.style.display = "inline-block";
 	}
@@ -77,11 +81,11 @@ document.addEventListener('DOMContentLoaded', function () {
 		modal.style.display = "block";
 	  carInd.style.visibility = "hidden";
 	}
-	loginBtn.onclick = function () {
+	loginBtn.onclick = function () {//link to login page
 		login.style.display = "inline-block";
 		register.style.display = "none";
 	}
-	window.onclick = function(event) {
+	window.onclick = function(event) {//if the user clicks anywhere in the page outside the modal, it closes
 	  if (event.target == modal) {
 	    modal.style.display = "none";
 	    carInd.style.visibility = "visible";
@@ -89,9 +93,11 @@ document.addEventListener('DOMContentLoaded', function () {
 	  document.getElementById('error').style.display = 'none';
 	}
 
-	getError();
+	getError(); //check errors
 });
 
+
+// service worker to load data fromo api calls
 let workerApi = new Worker('js/api-request_service-worker.js');
 
 workerApi.postMessage({
@@ -124,6 +130,8 @@ workerApi.addEventListener('message', function (e) {
       }
   }, false);
 
+
+// set the dark mode on all the webapp
 function dark () {
 	document.body.classList.add("dark-mode");
 	var navbar = document.querySelector(".navbar");
@@ -146,6 +154,7 @@ function dark () {
 	localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
 }
 
+// set the light mode on all the webapp
 function light () {
 	var navbar = document.querySelector(".navbar");
 	navbar.classList.add("navbar-light");
@@ -168,6 +177,8 @@ function light () {
 	localStorage.setItem( 'darkmode', JSON.stringify(darkModeActivation) );
 }
 
+
+// service worker to load photo in the home page
 let workerPhoto = new Worker('js/photo_service-worker.js');
 var userLoc;
 var weatherDes;
@@ -206,6 +217,7 @@ var weatherDes;
 	})
 })();
 
+// search a city from the search bar
 function search () {
 	var loc = document.getElementById('search-loc');
 	console.log(loc.value);
@@ -213,6 +225,8 @@ function search () {
 
 }
 
+
+// check if there are some error and show them in an alert banner
 async function getError() {
   	var errorBanner = document.getElementById('error');
 	  var response = await fetch('http://127.0.0.1:3000/get_errors');
@@ -223,6 +237,7 @@ async function getError() {
 	  }
 	};
 
+// check if there are cookies making a request to the server
 	async function getCookie() {
 		var response = await fetch('http://127.0.0.1:3000/cookies');
 		jsonObj = await response.json();

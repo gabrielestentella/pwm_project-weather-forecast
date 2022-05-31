@@ -28,8 +28,6 @@ var errors = {
 
 app.set('view engine', 'ejs');
 
-
-
 //Express static file module
 app.use(express.static(__dirname + '/assets'));
 
@@ -71,40 +69,7 @@ app.get('/private_:city/', function (req, response) {
 	console.log(req.session);
 	const name = req.params.city;
 	const nameCapitalised = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-	let h1;
-	let lat;
-	let lon;
-	let country;
-	let jsonObj;
-	let w1;
-	let t1;
-	let uv1;
-	let rp1;
-	let ws1;
-	let h2;
-	let w2;
-	let t2;
-	let uv2;
-	let rp2;
-	let ws2;
-	let h3;
-	let w3;
-	let t3;
-	let uv3;
-	let rp3;
-	let ws3;
-	let h4 ;
-	let w4 ;
-	let t4 ;
-	let uv4 ;
-	let rp4 ;
-	let ws4 ;
-	let h5; 
-	let w5;
-	let t5;
-	let uv5;
-	let rp5;
-	let ws5;
+	let h1, lat, lon, country, jsonObj, w1, t1, uv1, rp1, ws1, h2, w2, t2, uv2, rp2, ws2, h3, w3, t3, uv3, rp3, ws3, h4 , w4 , t4 , uv4 , rp4 , ws4 , h5, w5, t5, uv5, rp5, ws5, al, danger;
 
 	axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${nameCapitalised}&limit=1&appid=${apiKeyOpenWeather}`)
 	.then(res => {
@@ -289,6 +254,7 @@ checkLog = async (collectionName, elementToSearch) => {
 app.get('/search_:cityname/', function (req, response) {
 	const name = req.params.cityname;
 	const nameCapitalised = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+	let jsonObj, desc, temp, wind, hum, t_per, clouds, tmax, tmin, t_wind, t_hum, t_desc, t_cluds, al, danger;
 
 	axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${nameCapitalised}&limit=1&appid=${apiKeyOpenWeather}`)
 	.then(res => {
