@@ -7,6 +7,7 @@ const MongoClient = require('mongodb').MongoClient;
 const session = require('express-session');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcryptjs');
+const compression = require('compression');
 
 // Configure dotenv package
 require("dotenv").config();
@@ -27,6 +28,9 @@ var errors = {
 };
 
 app.set('view engine', 'ejs');
+
+// Compress all HTTP responses
+app.use(compression());
 
 //Express static file module
 app.use(express.static(__dirname + '/assets'));
@@ -159,96 +163,8 @@ app.get('/private_:city/', function (req, response) {
 				danger : danger
 			});
 	});
-	})
-});
-
-app.post('/register', urlEncoded, async (req, res) => {
-	req.body.pass = await bcrypt.hash(req.body.pass, 10);
-	const promise = insertDB('users', req.body);
-	promise.then(value => { 
-		req.session.city = req.body.city;
-		const name = req.body.city;
-		const nameCapitalised = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-		res.render('private.ejs', {title : nameCapitalised});
-	}, reason => {
-		console.error(reason) ;
-		errors.errorOccured = true;
-		errors.errorMessage = 'Error 1064: cannot insert data into database';
-		res.redirect('home.html');
 	});
 });
-
-
-app.post('/login', urlEncoded, (req, res) => {
-	const promise = checkLog('users', req.body);
-	promise.then(value => { 
-		req.session.city = value.city;
-		const name = req.session.city;
-		const nameCapitalised = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
-		res.render('private.ejs', {title : nameCapitalised});
-	}, reason => {
-		errors.errorOccured = true;
-		errors.errorMessage = 'Error 401: unauthorized - ' + reason;
-		res.redirect('home.html');
-	});
-});
-
-app.post('/tips', urlEncoded, async (req, res) => {
-	await mongoClient.connect();
-    const database = mongoClient.db(DBName);
-    const col = database.collection('tips');
-    await col.update(
-    	{_id : req.body.us_email},
-    	{$set: req.body},
-    	{upsert: true});
-});
-
-insertDB = async (collectionName, elementToInsert) => {
-
-    try {
-        await mongoClient.connect();
-        const database = mongoClient.db(DBName);
-        const col = database.collection(collectionName);
-        const token = jwt.sign({id: elementToInsert.user_id}, privateKey, {expiresIn: '5h' });
-        let result = await col.update(
-            { _id: token },
-            { $set: elementToInsert },
-            { upsert: true });
-        return Promise.resolve(result);
-    } catch (error) {
-        return Promise.reject(error);
-    }
-}
-
-checkLog = async (collectionName, elementToSearch) => {
-
-    try {
-        await mongoClient.connect();
-        const database = mongoClient.db(DBName);
-        const col = database.collection(collectionName);
-        const query = {user_id : elementToSearch.user_id};
-        let result = await col.findOne(query);
-
-      	if (!result) {
-      		return Promise.reject('utente non registrato');
-      	}
-
-        try {
-        	jwt.verify(result._id, privateKey);
-        } catch (err) {
-        	return Promise.reject('sessione scaduta');
-        }
-
-        if (await bcrypt.compare(elementToSearch.pass, result.pass)) {
-        	return Promise.resolve(result);        	
-        } else {
-        	return Promise.reject('password errata');
-        }
-    } catch (error) {
-        return Promise.reject(error);
-    }
-}
-
 
 //dinamic construction of the page when the user search something
 app.get('/search_:cityname/', function (req, response) {
@@ -325,6 +241,93 @@ app.get('/search_:cityname/', function (req, response) {
 		})
 	})
 });
+
+app.post('/register', urlEncoded, async (req, res) => {
+	req.body.pass = await bcrypt.hash(req.body.pass, 10);
+	const promise = insertDB('users', req.body);
+	promise.then(value => { 
+		req.session.city = req.body.city;
+		const name = req.body.city;
+		const nameCapitalised = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+		res.render('private.ejs', {title : nameCapitalised});
+	}, reason => {
+		console.error(reason) ;
+		errors.errorOccured = true;
+		errors.errorMessage = 'Error 1064: cannot insert data into database';
+		res.redirect('home.html');
+	});
+});
+
+
+app.post('/login', urlEncoded, (req, res) => {
+	const promise = checkLog('users', req.body);
+	promise.then(value => { 
+		req.session.city = value.city;
+		const name = req.session.city;
+		const nameCapitalised = name.charAt(0).toUpperCase() + name.slice(1).toLowerCase();
+		res.render('private.ejs', {title : nameCapitalised});
+	}, reason => {
+		errors.errorOccured = true;
+		errors.errorMessage = 'Error 401: unauthorized - ' + reason;
+		res.redirect('home.html');
+	});
+});
+
+app.post('/tips', urlEncoded, async (req, res) => {
+	await mongoClient.connect();
+    const database = mongoClient.db(DBName);
+    const col = database.collection('tips');
+    await col.update(
+    	{_id : req.body.us_email},
+    	{$set: req.body},
+    	{upsert: true});
+});
+
+insertDB = async (collectionName, elementToInsert) => {
+
+    try {
+        await mongoClient.connect();
+        const database = mongoClient.db(DBName);
+        const col = database.collection(collectionName);
+        const token = jwt.sign({id: elementToInsert.user_id}, privateKey, {expiresIn: '5h' });
+        let result = await col.update(
+            { _id: token },
+            { $set: elementToInsert },
+            { upsert: true });
+        return Promise.resolve(result);
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
+
+checkLog = async (collectionName, elementToSearch) => {
+
+    try {
+        await mongoClient.connect();
+        const database = mongoClient.db(DBName);
+        const col = database.collection(collectionName);
+        const query = {user_id : elementToSearch.user_id};
+        let result = await col.findOne(query);
+
+      	if (!result) {
+      		return Promise.reject('utente non registrato');
+      	}
+
+        try {
+        	jwt.verify(result._id, privateKey);
+        } catch (err) {
+        	return Promise.reject('sessione scaduta');
+        }
+
+        if (await bcrypt.compare(elementToSearch.pass, result.pass)) {
+        	return Promise.resolve(result);        	
+        } else {
+        	return Promise.reject('password errata');
+        }
+    } catch (error) {
+        return Promise.reject(error);
+    }
+};
 
 app.listen(port);
 console.log('Server started at http://localhost:' + port);

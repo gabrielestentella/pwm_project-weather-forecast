@@ -4,21 +4,24 @@
 
 .caritem1 {
 	height: 600px;
-	background-image: url("/img_carousel/milano.jpeg");
+	background-image: url("/img_carousel/milano.avif");
+	content-visibility: auto;
 	background-size: cover;
 	color: black;
 }
 
 .caritem2 {
 	height: 600px;
-	background-image: url("/img_carousel/londra.jpeg");
+	background-image: url("/img_carousel/londra.avif");
+	content-visibility: auto;
 	background-size: cover;
 	color: black;
 }
 
 .caritem3 {
 	height: 600px;
-	background-image: url("/img_carousel/parigi.jpeg");
+	background-image: url("/img_carousel/parigi.avif");
+	content-visibility: auto;
 	background-size: cover;
 	color: black;
 }
@@ -51,28 +54,32 @@
 }
 
 .card > .card-img-top.ny {
-	background-image: url("/img_cards/nyc.jpeg");
+	background-image: url("/img_cards/nyc.avif");
+	content-visibility: auto;
 	background-size: cover;
 	background-position: center;
 	height: 150px;
 }
 
 .card > .card-img-top.la {
-	background-image: url("/img_cards/la.jpeg");
+	background-image: url("/img_cards/la.avif");
+	content-visibility: auto;
 	background-size: cover;
 	background-position: center;
 	height: 150px;
 }
 
 .card > .card-img-top.syd {
-	background-image: url("/img_cards/sydney.jpeg");
+	background-image: url("/img_cards/sydney.avif");
+	content-visibility: auto;
 	background-size: cover;
 	background-position: center;
 	height: 150px;
 }
 
 .card > .card-img-top.tk {
-	background-image: url("/img_cards/tokyo.jpeg");
+	background-image: url("/img_cards/tokyo.avif");
+	content-visibility: auto;
 	background-size: cover;
 	background-position: center;
 	height: 150px;
@@ -203,4 +210,12 @@ body {
   padding: 20px;
   border: 1px solid #888;
   width: 50%; 
+}
+
+@font-face {
+  font-family: 'Pacifico';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Pacifico Regular'), local('Pacifico-Regular'), url(https://fonts.gstatic.com/s/pacifico/v12/FwZY7-Qmy14u9lezJ-6H6MmBp0u-.woff2) format('woff2');
+  font-display: swap;
 }
