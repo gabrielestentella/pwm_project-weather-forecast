@@ -76,93 +76,93 @@ app.get('/private_:city/', function (req, response) {
 	let h1, lat, lon, country, jsonObj, w1, t1, uv1, rp1, ws1, h2, w2, t2, uv2, rp2, ws2, h3, w3, t3, uv3, rp3, ws3, h4 , w4 , t4 , uv4 , rp4 , ws4 , h5, w5, t5, uv5, rp5, ws5, al, danger;
 
 	axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${nameCapitalised}&limit=1&appid=${apiKeyOpenWeather}`)
-	.then(res => {
+	.then( async (res) => {
 		console.log('1');
 		lat = res.data[0].lat;
 		lon = res.data[0].lon;
 		country = res.data[0].country;
 		console.log(res.data[0]);
-		axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=daily,minutely&units=metric&lang=it&appid=${apiKeyOpenWeather}`)
-		.then(res => {
-			console.log('2');
-			jsonObj = res.data;
-			console.log(jsonObj);
-			h1 = new Date(jsonObj.hourly[0].dt*1000).getHours();
-			w1 = jsonObj.hourly[0].weather[0].description;
-			t1 = jsonObj.hourly[0].temp;
-			uv1 = jsonObj.hourly[0].uvi;
-			rp1 = Math.trunc(jsonObj.hourly[0].pop*100);
-			ws1 = jsonObj.hourly[0].wind_speed;
-			h2 = new Date(jsonObj.hourly[1].dt*1000).getHours();
-			w2 = jsonObj.hourly[1].weather[0].description;
-			t2 = jsonObj.hourly[1].temp;
-			uv2 = jsonObj.hourly[1].uvi;
-			rp2 = Math.trunc(jsonObj.hourly[1].pop*100);
-			ws2 = jsonObj.hourly[1].wind_speed;
-			h3 = new Date(jsonObj.hourly[2].dt*1000).getHours();
-			w3 = jsonObj.hourly[2].weather[0].description;
-			t3 = jsonObj.hourly[2].temp;
-			uv3 = jsonObj.hourly[2].uvi;
-			rp3 = Math.trunc(jsonObj.hourly[2].pop*100);
-			ws3 = jsonObj.hourly[2].wind_speed;
-			h4 = new Date(jsonObj.hourly[3].dt*1000).getHours();
-			w4 = jsonObj.hourly[3].weather[0].description;
-			t4 = jsonObj.hourly[3].temp;
-			uv4 = jsonObj.hourly[3].uvi;
-			rp4 = jsonObj.hourly[3].pop*100;
-			ws4 = jsonObj.hourly[3].wind_speed;
-			h5 = new Date(jsonObj.hourly[4].dt*1000).getHours();
-			w5 = jsonObj.hourly[4].weather[0].description;
-			t5 = jsonObj.hourly[4].temp;
-			uv5 = jsonObj.hourly[4].uvi;
-			rp5 = Math.trunc(jsonObj.hourly[4].pop*100);
-			ws5 = jsonObj.hourly[4].wind_speed;
-			if (jsonObj.alerts) {
-				al = jsonObj.alerts[0].event;
-				danger = 'danger';
-			}else {
-				al = 'Nessuna Allerta';
-				danger = 'success';
-			}
-		})
-		.then(res => {
-			console.log('3');
-		response.render('private.ejs', 
-			{title: nameCapitalised, 
-				t1 : t1,
-				t2 : t2,
-				t3 : t3,
-				t4 : t4,
-				t5 : t5,
-				h1 : h1,
-				h2 : h2,
-				h3 : h3,
-				h4 : h4,
-				h5 : h5,
-				w1 : w1,
-				w2 : w2,
-				w3 : w3,
-				w4 : w4,
-				w5 : w5,
-				uv1 : uv1,
-				rp1 : rp1,
-				uv2 : uv2,
-				rp2 : rp2,
-				uv3 : uv3,
-				rp3 : rp3,
-				uv4 : uv4,
-				rp4 : rp4,
-				uv5 : uv5,
-				rp5 : rp5,
-				ws1 : ws1,
-				ws2 : ws2,
-				ws3 : ws3,
-				ws4 : ws4,
-				ws5 : ws5,
-				alert : al,
-				danger : danger
-			});
-	});
+		return await axios.get(`https://api.openweathermap.org/data/2.5/onecall?lat=${lat}&lon=${lon}&exclude=daily,minutely&units=metric&lang=it&appid=${apiKeyOpenWeather}`)
+			.then(res => {
+				console.log('2');
+				jsonObj = res.data;
+				console.log(jsonObj);
+				h1 = new Date(jsonObj.hourly[0].dt*1000).getHours();
+				w1 = jsonObj.hourly[0].weather[0].description;
+				t1 = jsonObj.hourly[0].temp;
+				uv1 = jsonObj.hourly[0].uvi;
+				rp1 = Math.trunc(jsonObj.hourly[0].pop*100);
+				ws1 = jsonObj.hourly[0].wind_speed;
+				h2 = new Date(jsonObj.hourly[1].dt*1000).getHours();
+				w2 = jsonObj.hourly[1].weather[0].description;
+				t2 = jsonObj.hourly[1].temp;
+				uv2 = jsonObj.hourly[1].uvi;
+				rp2 = Math.trunc(jsonObj.hourly[1].pop*100);
+				ws2 = jsonObj.hourly[1].wind_speed;
+				h3 = new Date(jsonObj.hourly[2].dt*1000).getHours();
+				w3 = jsonObj.hourly[2].weather[0].description;
+				t3 = jsonObj.hourly[2].temp;
+				uv3 = jsonObj.hourly[2].uvi;
+				rp3 = Math.trunc(jsonObj.hourly[2].pop*100);
+				ws3 = jsonObj.hourly[2].wind_speed;
+				h4 = new Date(jsonObj.hourly[3].dt*1000).getHours();
+				w4 = jsonObj.hourly[3].weather[0].description;
+				t4 = jsonObj.hourly[3].temp;
+				uv4 = jsonObj.hourly[3].uvi;
+				rp4 = jsonObj.hourly[3].pop*100;
+				ws4 = jsonObj.hourly[3].wind_speed;
+				h5 = new Date(jsonObj.hourly[4].dt*1000).getHours();
+				w5 = jsonObj.hourly[4].weather[0].description;
+				t5 = jsonObj.hourly[4].temp;
+				uv5 = jsonObj.hourly[4].uvi;
+				rp5 = Math.trunc(jsonObj.hourly[4].pop*100);
+				ws5 = jsonObj.hourly[4].wind_speed;
+				if (jsonObj.alerts) {
+					al = jsonObj.alerts[0].event;
+					danger = 'danger';
+				}else {
+					al = 'Nessuna Allerta';
+					danger = 'success';
+				}
+			})
+			.then(res => {
+				console.log('3');
+			response.render('private.ejs', 
+				{title: nameCapitalised, 
+					t1 : t1,
+					t2 : t2,
+					t3 : t3,
+					t4 : t4,
+					t5 : t5,
+					h1 : h1,
+					h2 : h2,
+					h3 : h3,
+					h4 : h4,
+					h5 : h5,
+					w1 : w1,
+					w2 : w2,
+					w3 : w3,
+					w4 : w4,
+					w5 : w5,
+					uv1 : uv1,
+					rp1 : rp1,
+					uv2 : uv2,
+					rp2 : rp2,
+					uv3 : uv3,
+					rp3 : rp3,
+					uv4 : uv4,
+					rp4 : rp4,
+					uv5 : uv5,
+					rp5 : rp5,
+					ws1 : ws1,
+					ws2 : ws2,
+					ws3 : ws3,
+					ws4 : ws4,
+					ws5 : ws5,
+					alert : al,
+					danger : danger
+				});
+		});
 	});
 });
 
