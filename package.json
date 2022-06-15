@@ -17,6 +17,7 @@
     "path": "^0.12.7",
     "serve-favicon": "^2.5.0",
     "session": "^0.1.0",
+    "uncss": "^0.17.3",
     "zl-fetch": "^3.4.0"
   }
 }
