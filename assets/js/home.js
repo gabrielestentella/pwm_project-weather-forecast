@@ -187,7 +187,8 @@ var weatherDes;
 	const latitude = (position.coords.latitude.toFixed(6));
 	const longitude = (position.coords.longitude.toFixed(6));
 	const today = new Date();
-	const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&units=metric&lang=it&appid=4da6d8179a32da39c51e22987d4e663e`;
+	const url = `https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}
+	&units=metric&lang=it&appid=4da6d8179a32da39c51e22987d4e663e`;
 	var response = await fetch(url);
 	var jsonObj = await response.json();
 	userLoc = jsonObj.name;

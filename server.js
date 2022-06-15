@@ -77,7 +77,6 @@ app.get('/private_:city/', function (req, response) {
 
 	axios.get(`http://api.openweathermap.org/geo/1.0/direct?q=${nameCapitalised}&limit=1&appid=${apiKeyOpenWeather}`)
 	.then( async (res) => {
-		console.log('1');
 		lat = res.data[0].lat;
 		lon = res.data[0].lon;
 		country = res.data[0].country;
@@ -126,7 +125,6 @@ app.get('/private_:city/', function (req, response) {
 				}
 			})
 			.then(res => {
-				console.log('3');
 			response.render('private.ejs', 
 				{title: nameCapitalised, 
 					t1 : t1,
